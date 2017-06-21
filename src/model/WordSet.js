@@ -2,17 +2,15 @@
 export default class WordSet {
 
   constructor() {
-    this.characters = [
-      'KILLER'.split(''),
-      'RESALE'.split(''),
-      'HORROR'.split(''),
-      'MIRROR'.split(''),
-      'GOOGLE'.split(''),
-      'HANDED'.split('')
-    ];
+    this.words = ['KILLER', 'RESALE', 'HORROR', 'MIRROR', 'GOOGLE', 'HANDED'];
+    this.grid = this.words.map( word => word.split(''));
   }
 
   getCharAt(x, y) {
-    return this.characters[x][y];
+    return this.grid[x][y];
+  }
+
+  isWord(word) {
+    return this.words.indexOf(word) !== -1;
   }
 }

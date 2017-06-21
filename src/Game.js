@@ -19,7 +19,9 @@ export default class Game extends Component {
     this.state = {
       completed: false,
       selected: new Set(),
-      charList: []
+      charList: [],
+      lastX: undefined,
+      lastY: undefined
     };
   }
 
@@ -83,6 +85,14 @@ export default class Game extends Component {
     return false;
   }
 
+  adjacentToLast(x, y) {
+    return this.state.lastX === undefined || this.state.lastY === undefined
+      || (x === this.state.lastX + 1 && y === this.state.lastY)
+      || (x === this.state.lastX - 1 && y === this.state.lastY)
+      || (x === this.state.lastX && y === this.state.lastY - 1)
+      || (x === this.state.lastX && y === this.state.lastY + 1);
+  }
+
   onSelectStart = (x, y, char) => {
     this.selecting = true;
     window.addEventListener('mouseup', this.onSelectEnd, false);
@@ -90,24 +100,35 @@ export default class Game extends Component {
     selected.add(this.getCellKey(x, y));
     this.setState({
       selected: selected,
-      charList: [char]
+      charList: [char],
+      lastX: x,
+      lastY: y
     });
   }
 
   onSelectOver = (x, y, char) => {
     if(this.selecting) {
-      let newSelected = this.state.selected;
-      newSelected.add(this.getCellKey(x, y));
-      this.setState({
-        selected: newSelected,
-        charList: this.state.charList.concat(char)
-      });
+      let key = this.getCellKey(x, y);
+      if(!this.state.selected.has(key) && this.adjacentToLast(x, y)) {
+        let newSelected = this.state.selected;
+        newSelected.add(key);
+        this.setState({
+          selected: newSelected,
+          charList: this.state.charList.concat(char),
+          lastX: x,
+          lastY: y
+        });
+      }
     }
   }
 
   onSelectEnd = () => {
     if(this.selecting) {
       this.selecting = false;
+      this.setState({
+        lastX: undefined,
+        lastY: undefined
+      });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
   }
