@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import PropTypes from 'prop-types';
+import WordSet from './model/WordSet';
 
 export default class Game extends Component {
 
@@ -10,13 +11,16 @@ export default class Game extends Component {
     onRestart: PropTypes.func
   }
 
+  selecting = false;
+
   constructor(props) {
     super(props);
+    this.words = new WordSet();
     this.state = {
-      completed: false
+      completed: false,
+      selected: new Set(),
+      charList: []
     };
-
-    this.restart = this.restart.bind(this);
   }
 
   getCellKey(x, y) {
@@ -47,6 +51,7 @@ export default class Game extends Component {
 
   componentWillUnmount() {
     this.stopTimer();
+    window.removeEventListener('mouseup', this.onSelectEnd);
   }
 
   onCheck(cellX, cellY) {
@@ -70,12 +75,41 @@ export default class Game extends Component {
     }
   }
 
-  restart() {
+  restart = () => {
     this.props.onRestart();
   }
 
   hasWon() {
     return false;
+  }
+
+  onSelectStart = (x, y, char) => {
+    this.selecting = true;
+    window.addEventListener('mouseup', this.onSelectEnd, false);
+    let selected = new Set();
+    selected.add(this.getCellKey(x, y));
+    this.setState({
+      selected: selected,
+      charList: [char]
+    });
+  }
+
+  onSelectOver = (x, y, char) => {
+    if(this.selecting) {
+      let newSelected = this.state.selected;
+      newSelected.add(this.getCellKey(x, y));
+      this.setState({
+        selected: newSelected,
+        charList: this.state.charList.concat(char)
+      });
+    }
+  }
+
+  onSelectEnd = () => {
+    if(this.selecting) {
+      this.selecting = false;
+      window.removeEventListener('mouseup', this.onSelectEnd);
+    }
   }
 
   render() {
@@ -84,7 +118,11 @@ export default class Game extends Component {
     let cells = heightArray.map((emptyY, y) => {
       let row = widthArray.map((emptyX, x) => {
         let key = this.getCellKey(x, y);
-        return <Cell key={key} x={x} y={y} char="C"></Cell>;
+        return <Cell key={key} x={x} y={y} char={this.words.getCharAt(x, y)}
+          selected={this.state.selected.has(key)}
+          onSelectStart={this.onSelectStart}
+          onSelectOver={this.onSelectOver}
+          onSelectEnd={this.onSelectEnd}></Cell>;
       });
       return <tr className="row" key={'row' + y}>{row}</tr>;
     });
@@ -97,6 +135,7 @@ export default class Game extends Component {
                     <tbody>{cells}</tbody>
                 </table>
             </div>
+            <div>{this.state.charList.join('')}</div>
         </div>;
   }
 }

@@ -7,7 +7,7 @@ import {shallow} from 'enzyme';
 describe('<Game>', () => {
   jest.useFakeTimers();
   it('renders without crashing', () => {
-    shallow(<Game width={10} height={10}/>);
+    shallow(<Game/>);
   });
 
   it('has header', () => {

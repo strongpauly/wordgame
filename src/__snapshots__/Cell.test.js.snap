@@ -10,14 +10,18 @@ ShallowWrapper {
   "length": 1,
   "node": <td
     className="cell"
-    onClick={[Function]}
+    onMouseDown={[Function]}
+    onMouseOver={[Function]}
+    onMouseUp={[Function]}
 >
     C
 </td>,
   "nodes": Array [
     <td
       className="cell"
-      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseOver={[Function]}
+      onMouseUp={[Function]}
 >
       C
 </td>,
@@ -39,16 +43,16 @@ ShallowWrapper {
       "_instance": Cell {
         "_reactInternalInstance": [Circular],
         "context": Object {},
+        "onSelectEnd": [Function],
+        "onSelectOver": [Function],
+        "onSelectStart": [Function],
         "props": Object {
           "char": "C",
           "x": 0,
           "y": 0,
         },
         "refs": Object {},
-        "selectCell": [Function],
-        "state": Object {
-          "selected": false,
-        },
+        "state": null,
         "updater": Object {
           "enqueueCallback": [Function],
           "enqueueCallbackInternal": [Function],
@@ -69,14 +73,18 @@ ShallowWrapper {
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <td
           className="cell"
-          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
 >
           C
 </td>,
         "_debugID": 4,
         "_renderedOutput": <td
           className="cell"
-          onClick={[Function]}
+          onMouseDown={[Function]}
+          onMouseOver={[Function]}
+          onMouseUp={[Function]}
 >
           C
 </td>,
