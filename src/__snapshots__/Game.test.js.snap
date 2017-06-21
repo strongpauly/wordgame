@@ -1,0 +1,429 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Game> creates grid based on width and height 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="gridContainer"
+>
+    <div>
+        <div
+            className="header"
+        >
+            <div
+                className="timer"
+            >
+                 
+            </div>
+        </div>
+        <table
+            className="grid"
+        >
+            <tbody>
+                <tr
+                    className="row"
+                >
+                    <Cell
+                        char="C"
+                        x={0}
+                        y={0}
+                    />
+                    <Cell
+                        char="C"
+                        x={1}
+                        y={0}
+                    />
+                </tr>
+                <tr
+                    className="row"
+                >
+                    <Cell
+                        char="C"
+                        x={0}
+                        y={1}
+                    />
+                    <Cell
+                        char="C"
+                        x={1}
+                        y={1}
+                    />
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>,
+  "nodes": Array [
+    <div
+      className="gridContainer"
+>
+      <div>
+            <div
+                  className="header"
+            >
+                  <div
+                        className="timer"
+                  >
+                         
+                  </div>
+            </div>
+            <table
+                  className="grid"
+            >
+                  <tbody>
+                        <tr
+                              className="row"
+                        >
+                              <Cell
+                                    char="C"
+                                    x={0}
+                                    y={0}
+                              />
+                              <Cell
+                                    char="C"
+                                    x={1}
+                                    y={0}
+                              />
+                        </tr>
+                        <tr
+                              className="row"
+                        >
+                              <Cell
+                                    char="C"
+                                    x={0}
+                                    y={1}
+                              />
+                              <Cell
+                                    char="C"
+                                    x={1}
+                                    y={1}
+                              />
+                        </tr>
+                  </tbody>
+            </table>
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance":  {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <Game
+        height={2}
+        width={2}
+/>,
+      "_debugID": 5,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": Game {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "height": 2,
+          "width": 2,
+        },
+        "refs": Object {},
+        "restart": [Function],
+        "state": Object {
+          "completed": false,
+        },
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 3,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div
+          className="gridContainer"
+>
+          <div>
+                    <div
+                              className="header"
+                    >
+                              <div
+                                        className="timer"
+                              >
+                                         
+                              </div>
+                    </div>
+                    <table
+                              className="grid"
+                    >
+                              <tbody>
+                                        <tr
+                                                  className="row"
+                                        >
+                                                  <Cell
+                                                            char="C"
+                                                            x={0}
+                                                            y={0}
+                                                  />
+                                                  <Cell
+                                                            char="C"
+                                                            x={1}
+                                                            y={0}
+                                                  />
+                                        </tr>
+                                        <tr
+                                                  className="row"
+                                        >
+                                                  <Cell
+                                                            char="C"
+                                                            x={0}
+                                                            y={1}
+                                                  />
+                                                  <Cell
+                                                            char="C"
+                                                            x={1}
+                                                            y={1}
+                                                  />
+                                        </tr>
+                              </tbody>
+                    </table>
+          </div>
+</div>,
+        "_debugID": 6,
+        "_renderedOutput": <div
+          className="gridContainer"
+>
+          <div>
+                    <div
+                              className="header"
+                    >
+                              <div
+                                        className="timer"
+                              >
+                                         
+                              </div>
+                    </div>
+                    <table
+                              className="grid"
+                    >
+                              <tbody>
+                                        <tr
+                                                  className="row"
+                                        >
+                                                  <Cell
+                                                            char="C"
+                                                            x={0}
+                                                            y={0}
+                                                  />
+                                                  <Cell
+                                                            char="C"
+                                                            x={1}
+                                                            y={0}
+                                                  />
+                                        </tr>
+                                        <tr
+                                                  className="row"
+                                        >
+                                                  <Cell
+                                                            char="C"
+                                                            x={0}
+                                                            y={1}
+                                                  />
+                                                  <Cell
+                                                            char="C"
+                                                            x={1}
+                                                            y={1}
+                                                  />
+                                        </tr>
+                              </tbody>
+                    </table>
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <Game
+    height={2}
+    width={2}
+/>,
+}
+`;
+
+exports[`<Game> has header 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="gridContainer"
+>
+    <div>
+        <div
+            className="header"
+        >
+            <div
+                className="timer"
+            >
+                 
+            </div>
+        </div>
+        <table
+            className="grid"
+        >
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+</div>,
+  "nodes": Array [
+    <div
+      className="gridContainer"
+>
+      <div>
+            <div
+                  className="header"
+            >
+                  <div
+                        className="timer"
+                  >
+                         
+                  </div>
+            </div>
+            <table
+                  className="grid"
+            >
+                  <tbody>
+                        
+                  </tbody>
+            </table>
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance":  {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <Game
+        height={0}
+        width={0}
+/>,
+      "_debugID": 3,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": Game {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "height": 0,
+          "width": 0,
+        },
+        "refs": Object {},
+        "restart": [Function],
+        "state": Object {
+          "completed": false,
+        },
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 2,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div
+          className="gridContainer"
+>
+          <div>
+                    <div
+                              className="header"
+                    >
+                              <div
+                                        className="timer"
+                              >
+                                         
+                              </div>
+                    </div>
+                    <table
+                              className="grid"
+                    >
+                              <tbody>
+                                        
+                              </tbody>
+                    </table>
+          </div>
+</div>,
+        "_debugID": 4,
+        "_renderedOutput": <div
+          className="gridContainer"
+>
+          <div>
+                    <div
+                              className="header"
+                    >
+                              <div
+                                        className="timer"
+                              >
+                                         
+                              </div>
+                    </div>
+                    <table
+                              className="grid"
+                    >
+                              <tbody>
+                                        
+                              </tbody>
+                    </table>
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <Game
+    height={0}
+    width={0}
+/>,
+}
+`;

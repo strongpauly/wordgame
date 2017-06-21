@@ -3,3 +3,63 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.gridContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    margin-top: 10px;
+    height: 26px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.status {
+    cursor: pointer;
+    flex-grow: 3;
+}
+
+.timer {
+    padding-top:3px;
+    min-width: 2em;
+}
+
+.grid {
+    border-spacing: 0;
+    border-collapse: collapse;
+    user-select: none;
+}
+
+.row {
+}
+
+.cell {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.cell.selected {
+    background-color: blue;
+    cursor: default;
+}
+
+.completed .cell{
+    cursor: default;
+}
+
+.spinning {
+    animation: icon-spin infinite 20s linear;
+}
+
+@keyframes icon-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
