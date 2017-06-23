@@ -9,56 +9,32 @@ describe('generateGrid', () => {
     expect(() => generateGrid(words, width, height)).toThrowError(`A grid of ${width} by ${height} cannot contain the words ${words}`);
   });
 
-  it('will wrap a single 4 letter word around a 2 x 2 grid' , () => {
-    let grid = generateGrid(['FOUR'], 2);
-    let gridString = grid.reduce( (s, row) => {
-      return s + row.join('');
-    }, '');
-    expect(gridString).toContain('F');
-    expect(gridString).toContain('O');
-    expect(gridString).toContain('U');
-    expect(gridString).toContain('R');
-  });
-
-  it('will wrap a single 9 letter word around a 3 x 3 grid' , () => {
-    let grid = generateGrid(['SWIZZLERS'], 3);
-    let gridString = grid.reduce( (s, row) => {
-      return s + row.join('');
-    }, '');
-    expect(gridString.split('').filter( c => c === 'S')).toHaveLength(2);
-    expect(gridString).toContain('W');
-    expect(gridString).toContain('I');
-    expect(gridString.split('').filter( c => c === 'Z')).toHaveLength(2);
-    expect(gridString).toContain('L');
-    expect(gridString).toContain('E');
-    expect(gridString).toContain('R');
-  });
-
-  it('will wrap two 2 letter words around a 2 x 2 grid' , () => {
-    let grid = generateGrid(['ON', 'IT'], 2, 2);
-    let gridString = grid.reduce( (s, row) => {
-      return s + row.join('');
-    }, '');
-    expect(gridString).toContain('O');
-    expect(gridString).toContain('N');
-    expect(gridString).toContain('I');
-    expect(gridString).toContain('T');
-  });
-
-  it('will wrap three 3 letter words around a 3 x 3 grid' , () => {
-    let grid = generateGrid(['GAP', 'ODE', 'HIT'], 3);
-    let gridString = grid.reduce( (s, row) => {
-      return s + row.join('');
-    }, '');
-    expect(gridString).toContain('G');
-    expect(gridString).toContain('A');
-    expect(gridString).toContain('P');
-    expect(gridString).toContain('O');
-    expect(gridString).toContain('D');
-    expect(gridString).toContain('E');
-    expect(gridString).toContain('H');
-    expect(gridString).toContain('I');
-    expect(gridString).toContain('T');
+  expect.extend({
+    toContainWordLetters(grid, words) {
+      const flatGrid = grid.reduce( (arr, row) => {
+        return arr.concat(row);
+      }, []);
+      const letterCounts = words.reduce( (counts, word) => {
+        word.split('').forEach(char => {
+          let count = counts[char];
+          if(count === undefined) {
+            count = 0;
+          }
+          counts[char] = count + 1;
+        });
+        return counts;
+      }, {});
+      let pass = true;
+      let message = '';
+      Object.keys(letterCounts).forEach(char => {
+        let gridCount = flatGrid.filter(c => c === char).length;
+        if (gridCount !== letterCounts[char]) {
+          message += `expected ${char} to appear ${letterCounts[char]} time(s), but appeared ${gridCount} time(s)\n`;
+          pass = false;
+        }
+      });
+      return {message: () => message, pass};
+    }
   });
 
   function canConnectWord(grid, word, x, y) {
@@ -136,11 +112,42 @@ describe('generateGrid', () => {
     }
   });
 
+  it('will wrap a single 4 letter word around a 2 x 2 grid' , () => {
+    const words = ['FOUR'];
+    const grid = generateGrid(words, 2);
+    expect(grid).toContainWordLetters(words);
+  });
+
+  it('will wrap a single 9 letter word around a 3 x 3 grid' , () => {
+    const words = ['SWIZZLERS'];
+    const grid = generateGrid(words, 3);
+    expect(grid).toContainWordLetters(words);
+  });
+
+  it('will wrap two 2 letter words around a 2 x 2 grid' , () => {
+    const words = ['ON', 'IT'];
+    const grid = generateGrid(words, 2);
+    expect(grid).toContainWordLetters(words);
+  });
+
+  it('will wrap three 3 letter words around a 3 x 3 grid' , () => {
+    const words = ['GAP', 'ODE', 'HIT'];
+    const grid = generateGrid(words, 3);
+    expect(grid).toContainWordLetters(words);
+  });
+
   it('will fit six 6 letter words in a 6 x 6 grid' , () => {
     let words = ['BUZZED', 'HARMED', 'CAPPED', 'GENTLE', 'FINKED', 'YAPPED'];
     let grid = generateGrid(words, 6);
     words.forEach(word => {
       expect(grid).toConnectWord(word);
     });
+  });
+
+  it('will fit different length words in a 6 x 6 grid' , () => {
+    let words = ['BUZZING', 'HARMFULLY', 'CAPPED', 'GENT', 'FINK', 'YAPPED'];
+    expect(words.reduce((count, word) => word.length + count, 0)).toEqual(36);
+    let grid = generateGrid(words, 6);
+    expect(grid).toContainWordLetters(words);
   });
 });

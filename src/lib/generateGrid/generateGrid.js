@@ -43,7 +43,9 @@ export default function generateGrid(words, width, height = width) {
     // console.log('possible empty within bounds', possible);
     return possible[Math.floor(Math.random() * possible.length)];
   }
+  words.sort( (a, b) => b.length - a.length);
   while(!grid.isFull()) {
+    //Randomly try all possibilities to fit the words in!
     let island = grid.clone();
     words.forEach( word => {
       tryWord(word, island);

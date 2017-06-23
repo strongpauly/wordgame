@@ -7,7 +7,6 @@ export default class WordSet {
   constructor(size = 6, minWordLength = 3, maxWordLength = 8) {
     this.size = size;
     this.words = wordGenerator(size * size, minWordLength, maxWordLength).map( word => word.toUpperCase());
-    console.log(this.words);
     this.found = new Set();
     this.wordMap = new Map();
     this.grid = generateGrid(this.words, this.size, this.size);
