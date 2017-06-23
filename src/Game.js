@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import PropTypes from 'prop-types';
 import WordSet from './model/WordSet';
+import WordList from './WordList';
 
 export default class Game extends Component {
 
   static propTypes = {
-    width: PropTypes.number,
-    height: PropTypes.number,
-    onRestart: PropTypes.func
+    onRestart: PropTypes.func,
+    size: PropTypes.number
   }
 
   selecting = false;
 
   constructor(props) {
     super(props);
-    this.words = new WordSet();
+    this.words = new WordSet(this.props.size);
     this.state = {
       completed: false,
       selected: new Set(),
@@ -124,6 +124,10 @@ export default class Game extends Component {
 
   onSelectEnd = () => {
     if(this.selecting) {
+      let word = this.state.charList.join('');
+      if (this.words.isWord(word) && !this.words.isFound(word)) {
+        this.words.setFound(word);
+      }
       this.selecting = false;
       this.setState({
         lastX: undefined,
@@ -134,17 +138,21 @@ export default class Game extends Component {
   }
 
   render() {
-    let widthArray = new Array(this.props.width).fill();
-    let heightArray = new Array(this.props.height).fill();
+    let widthArray = new Array(this.words.width).fill();
+    let heightArray = new Array(this.words.height).fill();
     let cells = heightArray.map((emptyY, y) => {
       let row = widthArray.map((emptyX, x) => {
         let key = this.getCellKey(x, y);
-        return <Cell key={key} x={x} y={y} char={this.words.getCharAt(x, y)}
+        let char = this.words.getCharAt(x, y);
+        if(char === undefined) {
+          return;
+        }
+        return <Cell key={key} x={x} y={y} char={char}
           selected={this.state.selected.has(key)}
           onSelectStart={this.onSelectStart}
           onSelectOver={this.onSelectOver}
           onSelectEnd={this.onSelectEnd}></Cell>;
-      });
+      }).filter(cell => cell !== undefined);
       return <tr className="row" key={'row' + y}>{row}</tr>;
     });
     return <div className="gridContainer">
@@ -156,7 +164,8 @@ export default class Game extends Component {
                     <tbody>{cells}</tbody>
                 </table>
             </div>
-            <div>{this.state.charList.join('')}</div>
+            <div className="characters">{this.state.charList.join('')}</div>
+            <WordList wordSet={this.words} />
         </div>;
   }
 }

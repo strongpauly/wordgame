@@ -1,0 +1,14 @@
+.wordBox {
+  display:flex;
+  flex-wrap: wrap;
+  padding-left: 2px;
+}
+
+.charBox {
+  border-width: 1px;
+  border-color: black;
+  border-style: solid;
+  width: 1em;
+  height: 1em;
+  margin: 2px;
+}

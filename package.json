@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "random-words": "0.0.1",
+    "random-number-with-range": "git+https://github.com/dangvanthanh/random-number-with-range.git",
+    "random-word-of-length": "git+https://github.com/strongpauly/random-word.git",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },

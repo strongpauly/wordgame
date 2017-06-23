@@ -8,16 +8,13 @@ import propTypes from 'prop-types';
 export default class App extends Component {
 
   static propTypes = {
-    width: propTypes.number,
-    height: propTypes.number,
+    size: propTypes.number
   }
 
   constructor(props) {
     super(props);
     this.restart = this.restart.bind(this);
     this.state = {
-      width: props.width || 6,
-      height: props.height || 6,
       gameId: 0
     };
   }
@@ -35,8 +32,6 @@ export default class App extends Component {
         </div>
         <Game key={this.state.gameId}
             gameId={this.state.gameId}
-            width={this.state.width}
-            height={this.state.height}
             onRestart={this.restart}></Game>
       </div>
     );
