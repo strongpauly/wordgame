@@ -145,7 +145,7 @@ describe('generateGrid', () => {
   });
 
   it('will fit different length words in a 6 x 6 grid' , () => {
-    let words = ['BUZZING', 'HARMFULLY', 'CAPPED', 'GENT', 'FINK', 'YAPPED'];
+    let words = ['BUZZING', 'HARMFULLY', 'CAPPED', 'GENTLY', 'IT', 'YAPPED'];
     expect(words.reduce((count, word) => word.length + count, 0)).toEqual(36);
     let grid = generateGrid(words, 6);
     expect(grid).toContainWordLetters(words);

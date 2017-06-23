@@ -1,6 +1,4 @@
 
-import randomNumberWithRange from 'random-number-with-range';
-
 import Island from './Island';
 
 export default function generateGrid(words, width, height = width) {
@@ -14,17 +12,26 @@ export default function generateGrid(words, width, height = width) {
 
   function tryWord(word, island) {
     //Randomly pick first character position
-    let x = randomNumberWithRange(0, width, true);
-    let y = randomNumberWithRange(0, height, true);
-
-    word.split('').forEach( char => {
+    const emptyPositions = island.getEmptyCoords();
+    const firstCoord = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
+    if(firstCoord === undefined) {
+      return false;
+    }
+    let x = firstCoord.x;
+    let y = firstCoord.y;
+    word.split('').forEach( (char, index) => {
       island.set(x, y, char);
-      let coord = move(x, y, island);
-      if (coord) { //If grid is full we've finished.
-        x = coord.x;
-        y = coord.y;
+      if(index < word.length) {
+        let coord = move(x, y, island);
+        if (coord) {
+          x = coord.x;
+          y = coord.y;
+        } else { //We can't fit the word in.
+          return false;
+        }
       }
     });
+    return true;
   }
 
   function isValidCoord(x, y) {
@@ -43,16 +50,24 @@ export default function generateGrid(words, width, height = width) {
     // console.log('possible empty within bounds', possible);
     return possible[Math.floor(Math.random() * possible.length)];
   }
-  words.sort( (a, b) => b.length - a.length);
+  const sortedWords = words.concat();
+  sortedWords.sort( (a, b) => b.length - a.length );
+
+  let iterationCount = 0;
   while(!grid.isFull()) {
     //Randomly try all possibilities to fit the words in!
-    let island = grid.clone();
-    words.forEach( word => {
-      tryWord(word, island);
+    const island = grid.clone();
+    sortedWords.some( word => {
+      let fit = tryWord(word, island);
+      //If the word did't fit, this iteration is a dead end, restart.
+      return !fit;
     });
+
     if(island.isFull()) {
       grid = island;
     }
+    iterationCount ++;
   }
+  console.log(`Took ${iterationCount} attempts to find a solution`, words);
   return grid.toArray();
 }

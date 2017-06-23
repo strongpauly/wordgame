@@ -29,4 +29,19 @@ export default class Island {
   toArray() {
     return this.cells.map( column => column.concat() );
   }
+
+  /**
+   * Returns an array of coordinates which are currently empty within the Island.
+   */
+  getEmptyCoords() {
+    let coords = [];
+    this.cells.forEach( (column, x) => {
+      column.forEach( (cell, y) => {
+        if(cell === undefined) {
+          coords.push({x, y});
+        }
+      });
+    });
+    return coords;
+  }
 }
