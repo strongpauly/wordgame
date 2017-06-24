@@ -9,7 +9,6 @@ export default class Cell extends Component {
     char: PropTypes.string.isRequired,
     onSelectStart: PropTypes.func,
     onSelectOver: PropTypes.func,
-    onSelectOut: PropTypes.func,
     onSelectEnd: PropTypes.func,
     selected: PropTypes.bool
   }
@@ -30,12 +29,6 @@ export default class Cell extends Component {
     }
   }
 
-  onSelectOut = () => {
-    if(this.props.onSelectOut) {
-      this.props.onSelectOut(this.props.x, this.props.y, this.props.char);
-    }
-  }
-
   onSelectEnd = () => {
     if(this.props.onSelectEnd) {
       this.props.onSelectEnd(this.props.x, this.props.y, this.props.char);
@@ -51,7 +44,6 @@ export default class Cell extends Component {
     return <td className={ className.join(' ') }
       onMouseDown={this.onSelectStart}
       onMouseUp={this.onSelectEnd}
-      onMouseOver={this.onSelectOver}
-      onMouseOut={this.onSelectOut}>{ content }</td>;
+      onMouseOver={this.onSelectOver}>{ content }</td>;
   }
 }
