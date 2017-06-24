@@ -11,14 +11,13 @@ export default class Game extends Component {
     size: PropTypes.number
   }
 
-  selecting = false;
-
   constructor(props) {
     super(props);
     this.words = new WordSet(this.props.size);
     this.state = {
       completed: false,
-      selected: []
+      selected: [],
+      selecting: false
     };
   }
 
@@ -77,15 +76,15 @@ export default class Game extends Component {
   }
 
   onSelectStart = (x, y, char) => {
-    this.selecting = true;
     window.addEventListener('mouseup', this.onSelectEnd, false);
     this.setState({
+      selecting:true,
       selected: [{x, y, char}]
     });
   }
 
   onSelectOver = (x, y, char) => {
-    if(this.selecting) {
+    if(this.state.selecting) {
       const last = this.state.selected[this.state.selected.length - 1];
       const selected = this.isCellSelected(x, y);
       if(!selected && this.adjacentToLast(x, y, last)) {
@@ -112,14 +111,14 @@ export default class Game extends Component {
   }
 
   onSelectEnd = () => {
-    if(this.selecting) {
+    if(this.state.selecting) {
       let word = this.state.selected.map(cell => cell.char).join('');
       if (this.words.isWord(word) && !this.words.isFound(word)) {
         this.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
       }
-      this.selecting = false;
       this.setState({
-        selected: []
+        selected: [],
+        selecting: false
       });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
@@ -132,17 +131,22 @@ export default class Game extends Component {
       let row = widthArray.map((emptyX, x) => {
         let key = this.getCellKey(x, y);
         let char = this.words.getCharAt(x, y);
-        if(char === undefined) {
-          return;
-        }
+        // if(char === undefined) {
+        //   return;
+        // }
         return <Cell key={key} x={x} y={y} char={char}
           selected={this.isCellSelected(x, y)}
+          selecting={this.state.selecting}
+          used={this.words.isUsed(x, y)}
           onSelectStart={this.onSelectStart}
           onSelectOver={this.onSelectOver}
           onSelectOut={this.onSelectOut}
           onSelectEnd={this.onSelectEnd}></Cell>;
       }).filter(cell => cell !== undefined);
-      return <tr className="row" key={'row' + y}>{row}</tr>;
+      if(row.length === 0){
+        return;
+      }
+      return <div className="row" key={'row' + y}>{row}</div>;
     });
     return <div className="gridContainer">
             <div>
@@ -150,9 +154,9 @@ export default class Game extends Component {
                     <div className="timer">{this.state.time || ' '}</div>
                     <div className="status" onClick={this.reset}>Reset</div>
                 </div>
-                <table className={this.state.completed ? 'grid completed' : 'grid'}>
-                    <tbody>{cells}</tbody>
-                </table>
+                <div className={this.state.completed ? 'grid completed' : 'grid'}>
+                  {cells}
+                </div>
             </div>
             <div className="characters">{this.state.selected.map(cell => cell.char).join('')}</div>
             <WordList wordSet={this.words} />

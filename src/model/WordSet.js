@@ -11,9 +11,13 @@ export default class WordSet {
     this.grid = generateGrid(this.words, this.size, this.size);
   }
 
+  isUsed(x, y) {
+    return this.usedCells.has(x + ',' + y);
+  }
+
   getCharAt(x, y) {
-    if(this.usedCells.has( x + ',' + y))
-      return;
+    // if(this.usedCells.has( x + ',' + y))
+    //   return;
     return this.grid[x][y];
   }
 

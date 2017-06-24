@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Cell> has "cell" css class 1`] = `
-<td
+<div
   className="cell"
   onMouseDown={[Function]}
   onMouseOver={[Function]}
   onMouseUp={[Function]}
 >
   C
-</td>
+</div>
 `;

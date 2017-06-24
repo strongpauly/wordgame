@@ -36,15 +36,18 @@ body {
 }
 
 .row {
+  display:table-row;
 }
 
 .cell {
+    display:table-cell;
     border-width: 1px;
     border-color: black;
     border-style: solid;
     width: 36px;
     height: 36px;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 .cell.selected {
@@ -52,8 +55,17 @@ body {
     cursor: default;
 }
 
+.cell.selected.selecting {
+  cursor: -webkit-grabbing;
+}
+
+.cell.used {
+  color:lightgrey;
+  cursor:no-drop;
+}
+
 .completed .cell{
-    cursor: default;
+  cursor: default;
 }
 
 .characters {

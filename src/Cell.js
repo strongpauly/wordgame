@@ -10,7 +10,9 @@ export default class Cell extends Component {
     onSelectStart: PropTypes.func,
     onSelectOver: PropTypes.func,
     onSelectEnd: PropTypes.func,
-    selected: PropTypes.bool
+    selected: PropTypes.bool,
+    selecting: PropTypes.bool,
+    used: PropTypes.bool
   }
 
   constructor(props) {
@@ -18,19 +20,19 @@ export default class Cell extends Component {
   }
 
   onSelectStart = () => {
-    if(this.props.onSelectStart) {
+    if(this.props.onSelectStart && !this.props.used) {
       this.props.onSelectStart(this.props.x, this.props.y, this.props.char);
     }
   }
 
   onSelectOver = () => {
-    if(this.props.onSelectOver) {
+    if(this.props.onSelectOver && !this.props.used) {
       this.props.onSelectOver(this.props.x, this.props.y, this.props.char);
     }
   }
 
   onSelectEnd = () => {
-    if(this.props.onSelectEnd) {
+    if(this.props.onSelectEnd && !this.props.used) {
       this.props.onSelectEnd(this.props.x, this.props.y, this.props.char);
     }
   }
@@ -41,9 +43,15 @@ export default class Cell extends Component {
     if (this.props.selected) {
       className.push('selected');
     }
-    return <td className={ className.join(' ') }
+    if (this.props.selecting) {
+      className.push('selecting');
+    }
+    if(this.props.used) {
+      className.push('used');
+    }
+    return <div className={ className.join(' ') }
       onMouseDown={this.onSelectStart}
       onMouseUp={this.onSelectEnd}
-      onMouseOver={this.onSelectOver}>{ content }</td>;
+      onMouseOver={this.onSelectOver}>{ content }</div>;
   }
 }
