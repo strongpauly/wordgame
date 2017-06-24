@@ -18,10 +18,7 @@ export default class Game extends Component {
     this.words = new WordSet(this.props.size);
     this.state = {
       completed: false,
-      selected: new Set(),
-      charList: [],
-      lastX: undefined,
-      lastY: undefined
+      selected: []
     };
   }
 
@@ -56,82 +53,73 @@ export default class Game extends Component {
     window.removeEventListener('mouseup', this.onSelectEnd);
   }
 
-  onCheck(cellX, cellY) {
-    if(!this.state.completed) {
-      this.startTimer();
-      let key = this.getCellKey(cellX, cellY);
-      if(this.state.mines.has(key)) {
-        this.setState({exploded:true, completed:true});
-        this.stopTimer();
-      } else {
-        this.doCheck(key);
-        if(this.hasWon()) {
-          this.setState({completed:true});
-          this.stopTimer();
-        }
-        this.setState({
-          checked: this.state.checked,
-          marked: this.state.marked
-        });
-      }
-    }
-  }
-
   restart = () => {
     this.props.onRestart();
+  }
+
+  reset = () => {
+    this.words.clearFound();
+    this.setState({
+      selected: []
+    });
   }
 
   hasWon() {
     return false;
   }
 
-  adjacentToLast(x, y) {
-    return this.state.lastX === undefined || this.state.lastY === undefined
-      || (x === this.state.lastX + 1 && y === this.state.lastY)
-      || (x === this.state.lastX - 1 && y === this.state.lastY)
-      || (x === this.state.lastX && y === this.state.lastY - 1)
-      || (x === this.state.lastX && y === this.state.lastY + 1);
+  adjacentToLast(x, y, last) {
+    return last === undefined
+      || (x === last.x + 1 && y === last.y)
+      || (x === last.x - 1 && y === last.y)
+      || (x === last.x && y === last.y - 1)
+      || (x === last.x && y === last.y + 1);
   }
 
   onSelectStart = (x, y, char) => {
     this.selecting = true;
     window.addEventListener('mouseup', this.onSelectEnd, false);
-    let selected = new Set();
-    selected.add(this.getCellKey(x, y));
     this.setState({
-      selected: selected,
-      charList: [char],
-      lastX: x,
-      lastY: y
+      selected: [{x, y, char}]
     });
   }
 
   onSelectOver = (x, y, char) => {
     if(this.selecting) {
-      let key = this.getCellKey(x, y);
-      if(!this.state.selected.has(key) && this.adjacentToLast(x, y)) {
-        let newSelected = this.state.selected;
-        newSelected.add(key);
+      const last = this.state.selected[this.state.selected.length - 1];
+      const selected = this.isCellSelected(x, y);
+      if(!selected && this.adjacentToLast(x, y, last)) {
         this.setState({
-          selected: newSelected,
-          charList: this.state.charList.concat(char),
-          lastX: x,
-          lastY: y
+          selected: this.state.selected.concat({x, y, char})
         });
+      } else if(this.state.selected.length > 1) { //Check for moving backwards.
+        const penultimate = this.state.selected[this.state.selected.length - 2];
+        if(penultimate.x === x && penultimate.y === y) {
+          this.setState({
+            selected: this.state.selected.slice(0, -1)
+          });
+        }
       }
     }
   }
 
+  onSelectOut = (/*x, y, char*/) => {
+
+  }
+
+  isCellSelected(x, y) {
+    return this.state.selected.filter(cell => cell.x === x && cell.y === y).length > 0;
+  }
+
   onSelectEnd = () => {
     if(this.selecting) {
-      let word = this.state.charList.join('');
+      let word = this.state.selected.map(cell => cell.char).join('');
       if (this.words.isWord(word) && !this.words.isFound(word)) {
-        this.words.setFound(word);
+        this.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
       }
       this.selecting = false;
       this.setState({
-        lastX: undefined,
-        lastY: undefined
+        selected: []
       });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
@@ -148,9 +136,10 @@ export default class Game extends Component {
           return;
         }
         return <Cell key={key} x={x} y={y} char={char}
-          selected={this.state.selected.has(key)}
+          selected={this.isCellSelected(x, y)}
           onSelectStart={this.onSelectStart}
           onSelectOver={this.onSelectOver}
+          onSelectOut={this.onSelectOut}
           onSelectEnd={this.onSelectEnd}></Cell>;
       }).filter(cell => cell !== undefined);
       return <tr className="row" key={'row' + y}>{row}</tr>;
@@ -159,12 +148,13 @@ export default class Game extends Component {
             <div>
                 <div className="header">
                     <div className="timer">{this.state.time || ' '}</div>
+                    <div className="status" onClick={this.reset}>Reset</div>
                 </div>
                 <table className={this.state.completed ? 'grid completed' : 'grid'}>
                     <tbody>{cells}</tbody>
                 </table>
             </div>
-            <div className="characters">{this.state.charList.join('')}</div>
+            <div className="characters">{this.state.selected.map(cell => cell.char).join('')}</div>
             <WordList wordSet={this.words} />
         </div>;
   }

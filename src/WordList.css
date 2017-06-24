@@ -1,7 +1,14 @@
+.wordList {
+  width:234px;
+  display:flex;
+  flex-wrap:wrap;
+}
+
 .wordBox {
   display:flex;
   flex-wrap: wrap;
-  padding-left: 2px;
+  margin-right: 1.3em;
+  margin-top: 0.2em;
 }
 
 .charBox {
@@ -10,5 +17,5 @@
   border-style: solid;
   width: 1em;
   height: 1em;
-  margin: 2px;
+  margin-right: 0.2em;
 }

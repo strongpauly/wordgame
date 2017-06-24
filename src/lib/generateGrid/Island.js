@@ -1,5 +1,4 @@
 
-
 export default class Island {
   constructor (width, height) {
     //Initialise with empty array of correct sizes - todo will have to change this to map better.

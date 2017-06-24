@@ -32,6 +32,7 @@ body {
     border-spacing: 0;
     border-collapse: collapse;
     user-select: none;
+    min-height: 236px;
 }
 
 .row {
@@ -53,6 +54,10 @@ body {
 
 .completed .cell{
     cursor: default;
+}
+
+.characters {
+  height: 1em;
 }
 
 .spinning {
