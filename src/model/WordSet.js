@@ -36,6 +36,10 @@ export default class WordSet {
     return this.isWord(word) && this.found.has(word);
   }
 
+  foundAll() {
+    return this.found.size === this.words.length;
+  }
+
   clearFound() {
     this.found = new Set();
     this.usedCells = new Set();

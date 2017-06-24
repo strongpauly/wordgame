@@ -64,7 +64,7 @@ export default class Game extends Component {
   }
 
   hasWon() {
-    return false;
+    return this.words.foundAll();
   }
 
   adjacentToLast(x, y, last) {
@@ -76,6 +76,7 @@ export default class Game extends Component {
   }
 
   onSelectStart = (x, y, char) => {
+    this.startTimer();
     window.addEventListener('mouseup', this.onSelectEnd, false);
     this.setState({
       selecting:true,
@@ -102,10 +103,6 @@ export default class Game extends Component {
     }
   }
 
-  onSelectOut = (/*x, y, char*/) => {
-
-  }
-
   isCellSelected(x, y) {
     return this.state.selected.filter(cell => cell.x === x && cell.y === y).length > 0;
   }
@@ -116,9 +113,14 @@ export default class Game extends Component {
       if (this.words.isWord(word) && !this.words.isFound(word)) {
         this.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
       }
+      const completed = this.hasWon();
+      if(completed) {
+        this.stopTimer();
+      }
       this.setState({
         selected: [],
-        selecting: false
+        selecting: false,
+        completed: completed
       });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
@@ -151,8 +153,9 @@ export default class Game extends Component {
     return <div className="gridContainer">
             <div>
                 <div className="header">
-                    <div className="timer">{this.state.time || ' '}</div>
+                    <div className="status" onClick={this.restart}>New</div>
                     <div className="status" onClick={this.reset}>Reset</div>
+                    <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>
                   {cells}
