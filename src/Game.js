@@ -17,7 +17,9 @@ export default class Game extends Component {
     this.state = {
       completed: false,
       selected: [],
-      selecting: false
+      selecting: false,
+      hinting: [],
+      hintNumber: 0
     };
   }
 
@@ -60,6 +62,18 @@ export default class Game extends Component {
     this.words.clearFound();
     this.setState({
       selected: []
+    });
+  }
+
+  showHint = () => {
+    this.words.words.some( word => {
+      if(!this.words.isFound(word)) {
+        this.setState({
+          hinting: this.words.getCoords(word),
+          hintNumber: this.state.hintNumber + 1
+        });
+        return true;
+      }
     });
   }
 
@@ -119,6 +133,7 @@ export default class Game extends Component {
       }
       this.setState({
         selected: [],
+        hinting: [],
         selecting: false,
         completed: completed
       });
@@ -133,13 +148,12 @@ export default class Game extends Component {
       let row = widthArray.map((emptyX, x) => {
         let key = this.getCellKey(x, y);
         let char = this.words.getCharAt(x, y);
-        // if(char === undefined) {
-        //   return;
-        // }
         return <Cell key={key} x={x} y={y} char={char}
           selected={this.isCellSelected(x, y)}
           selecting={this.state.selecting}
           used={this.words.isUsed(x, y)}
+          hinting={this.state.hinting.filter(coord => coord.x === x && coord.y === y).length > 0}
+          hintNumber={this.state.hintNumber}
           onSelectStart={this.onSelectStart}
           onSelectOver={this.onSelectOver}
           onSelectOut={this.onSelectOut}
@@ -155,6 +169,7 @@ export default class Game extends Component {
                 <div className="header">
                     <div className="clickable" onClick={this.restart}>New</div>
                     <div className="clickable status" onClick={this.reset}>Reset</div>
+                    <div className="clickable status" onClick={this.showHint}>Hint</div>
                     <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>

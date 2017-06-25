@@ -1,10 +1,11 @@
 
-export default class Island {
+export default class Grid {
   constructor (width, height) {
     //Initialise with empty array of correct sizes - todo will have to change this to map better.
     this.cells = new Array(width).fill().map( () => new Array(height).fill());
     this.width = width;
     this.height = height;
+    this.wordCoords = new Map();
   }
 
   isFull() {
@@ -12,9 +13,9 @@ export default class Island {
   }
 
   clone() {
-    let island = new Island(this.width, this.height);
-    island.cells = this.cells.map( column => column.map( cell => cell));
-    return island;
+    let grid = new Grid(this.width, this.height);
+    grid.cells = this.cells.map( column => column.map( cell => cell));
+    return grid;
   }
 
   set(x, y, char) {
@@ -42,5 +43,13 @@ export default class Island {
       });
     });
     return coords;
+  }
+
+  setWordCoords(word, coords) {
+    this.wordCoords.set(word, coords);
+  }
+
+  getWordCoords(word, coords) {
+    return this.wordCoords.get(word, coords);
   }
 }

@@ -1,5 +1,5 @@
 
-import Island from './Island';
+import Grid from './Grid';
 
 export default function generateGrid(words, width, height = width) {
   //Check that size can hold words
@@ -8,37 +8,39 @@ export default function generateGrid(words, width, height = width) {
   }
 
   //Initialise empty 2d grid.
-  let grid = new Island(width, height);
+  let grid = new Grid(width, height);
 
-  function tryWord(word, island) {
+  function tryWord(word, grid) {
     //Randomly pick first character position
-    const emptyPositions = island.getEmptyCoords();
+    const emptyPositions = grid.getEmptyCoords();
     const firstCoord = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
     if(firstCoord === undefined) {
       return false;
     }
     let x = firstCoord.x;
     let y = firstCoord.y;
+    const coords = [firstCoord];
     word.split('').forEach( (char, index) => {
-      island.set(x, y, char);
+      grid.set(x, y, char);
+      coords.push({x, y});
       if(index < word.length) {
-        let coord = move(x, y, island);
+        let coord = move(x, y, grid);
         if (coord) {
           x = coord.x;
           y = coord.y;
         } else { //We can't fit the word in.
-          return false;
+          return;
         }
       }
     });
-    return true;
+    return coords;
   }
 
   function isValidCoord(x, y) {
     return x >= 0 && y >= 0 && x < width && y < height;
   }
 
-  function move(x, y, island) {
+  function move(x, y, grid) {
     let possible = [
       {x: x, y: y - 1},
       {x: x, y: y + 1},
@@ -46,7 +48,7 @@ export default function generateGrid(words, width, height = width) {
       {x: x + 1, y: y}
     ].filter( coord => isValidCoord(coord.x, coord.y));
     // console.log('possible within bounds', possible);
-    possible = possible.filter( coord => island.isCellEmpty(coord.x, coord.y));
+    possible = possible.filter( coord => grid.isCellEmpty(coord.x, coord.y));
     // console.log('possible empty within bounds', possible);
     return possible[Math.floor(Math.random() * possible.length)];
   }
@@ -56,18 +58,19 @@ export default function generateGrid(words, width, height = width) {
   let iterationCount = 0;
   while(!grid.isFull()) {
     //Randomly try all possibilities to fit the words in!
-    const island = grid.clone();
+    const newGrid = grid.clone();
     sortedWords.some( word => {
-      let fit = tryWord(word, island);
+      let coords = tryWord(word, newGrid);
+      newGrid.setWordCoords(word, coords);
       //If the word did't fit, this iteration is a dead end, restart.
-      return !fit;
+      return coords === undefined;
     });
 
-    if(island.isFull()) {
-      grid = island;
+    if(newGrid.isFull()) {
+      grid = newGrid;
     }
     iterationCount ++;
   }
   console.log(`Took ${iterationCount} attempts to find a solution`, words);
-  return grid.toArray();
+  return grid;
 }

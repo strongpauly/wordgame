@@ -22,7 +22,6 @@ body {
 }
 
 .status {
-    flex-grow: 3;
 }
 
 .timer {
@@ -68,6 +67,10 @@ body {
   cursor: default;
 }
 
+.hint {
+  animation: hint 1.5s linear;
+}
+
 .characters {
   height: 1em;
   margin: 5px;
@@ -75,6 +78,11 @@ body {
 
 .spinning {
     animation: icon-spin infinite 20s linear;
+}
+
+@keyframes hint {
+    from {background-color: yellow;}
+    to {background-color: white;}
 }
 
 @keyframes icon-spin {

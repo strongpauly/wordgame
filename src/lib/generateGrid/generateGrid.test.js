@@ -11,7 +11,7 @@ describe('generateGrid', () => {
 
   expect.extend({
     toContainWordLetters(grid, words) {
-      const flatGrid = grid.reduce( (arr, row) => {
+      const flatGrid = grid.toArray().reduce( (arr, row) => {
         return arr.concat(row);
       }, []);
       const letterCounts = words.reduce( (counts, word) => {
@@ -94,8 +94,9 @@ describe('generateGrid', () => {
 
   expect.extend({
     toConnectWord(grid, word) {
-      const pass = canConnectWordFromFirstCharacter(grid, word);
-      let gridString = grid.map( column => column.join('') + '\n');
+      const gridArray = grid.toArray();
+      const pass = canConnectWordFromFirstCharacter(gridArray, word);
+      let gridString = gridArray.map( column => column.join('') + '\n');
       if (pass) {
         return {
           message: () => (

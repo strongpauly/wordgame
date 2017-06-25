@@ -12,7 +12,9 @@ export default class Cell extends Component {
     onSelectEnd: PropTypes.func,
     selected: PropTypes.bool,
     selecting: PropTypes.bool,
-    used: PropTypes.bool
+    used: PropTypes.bool,
+    hinting: PropTypes.bool,
+    hintNumber: PropTypes.number
   }
 
   constructor(props) {
@@ -40,6 +42,7 @@ export default class Cell extends Component {
   render() {
     let className = ['cell'];
     let content = this.props.char;
+    let key = 'cell-' + this.props.x + '-' + this.props.y;
     if (this.props.selected) {
       className.push('selected');
     }
@@ -49,7 +52,11 @@ export default class Cell extends Component {
     if(this.props.used) {
       className.push('used');
     }
-    return <div className={ className.join(' ') }
+    if(this.props.hinting) {
+      className.push('hint');
+      key += '-' + this.props.hintNumber;
+    }
+    return <div className={ className.join(' ') } key={key}
       onMouseDown={this.onSelectStart}
       onMouseUp={this.onSelectEnd}
       onMouseOver={this.onSelectOver}>{ content }</div>;

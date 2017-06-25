@@ -9,6 +9,7 @@ export default class WordSet {
     this.words = wordGenerator(size * size, minWordLength, maxWordLength).map( word => word.toUpperCase());
     this.clearFound();
     this.grid = generateGrid(this.words, this.size, this.size);
+    this.gridArray = this.grid.toArray();
   }
 
   isUsed(x, y) {
@@ -16,16 +17,14 @@ export default class WordSet {
   }
 
   getCharAt(x, y) {
-    // if(this.usedCells.has( x + ',' + y))
-    //   return;
-    return this.grid[x][y];
+    return this.gridArray[x][y];
   }
 
   isWord(word) {
     return this.words.indexOf(word) !== -1;
   }
 
-  setWordFound (word, keys) {
+  setWordFound(word, keys) {
     this.found.add(word);
     keys.forEach( key => {
       this.usedCells.add(key);
@@ -34,6 +33,11 @@ export default class WordSet {
 
   isFound(word) {
     return this.isWord(word) && this.found.has(word);
+  }
+
+  //Get a list of x, y coordinates of where this word is shown in the grid.
+  getCoords(word) {
+    return this.grid.getWordCoords(word);
   }
 
   foundAll() {
@@ -46,10 +50,10 @@ export default class WordSet {
   }
 
   get width() {
-    return this.grid.length;
+    return this.grid.width;
   }
 
   get height() {
-    return this.grid.reduce( (max, column) => Math.max(max, column.length), 0);
+    return this.grid.height;
   }
 }
