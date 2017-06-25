@@ -153,8 +153,8 @@ export default class Game extends Component {
     return <div className="gridContainer">
             <div>
                 <div className="header">
-                    <div className="status" onClick={this.restart}>New</div>
-                    <div className="status" onClick={this.reset}>Reset</div>
+                    <div className="clickable" onClick={this.restart}>New</div>
+                    <div className="clickable status" onClick={this.reset}>Reset</div>
                     <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>

@@ -5,7 +5,8 @@
   "dependencies": {
     "random-word-of-length": "git+https://github.com/strongpauly/random-word.git",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "wordlist-english": "git+https://github.com/strongpauly/wordlist-english.git"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",

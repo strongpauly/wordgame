@@ -1,13 +1,15 @@
 
-import randomword from 'random-word-of-length';
+import hardRandomWord from 'random-word-of-length';
+import easyRandomWord from './easyWordGenerator';
 
 function getWordLength(min, max) {
   return Math.round(min + (Math.random() * (max - min)));
 }
 
-export default function wordGenerator(characters, minWordLength = 3, maxWordLength = 8) {
+export default function wordGenerator(characters, minWordLength = 3, maxWordLength = 8, easy = true) {
   let charactersLeft = characters;
   let wordLengths = [];
+  let randomword = easy ? easyRandomWord : hardRandomWord;
   while (charactersLeft > maxWordLength) {
     let newWordLength = getWordLength(minWordLength, maxWordLength);
     let newCharactersLeft = charactersLeft - newWordLength;
