@@ -11,6 +11,18 @@
   margin-top: 0.2em;
 }
 
+.wordBox a {
+  display: flex;
+  flex-wrap: wrap;
+  text-decoration: none;
+  color: inherit;
+}
+
+.wordBox a:hover {
+  text-decoration: underline;
+  color: blue;
+}
+
 .charBox {
   border-width: 1px;
   border-color: black;
