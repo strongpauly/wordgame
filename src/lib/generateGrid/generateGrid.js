@@ -19,7 +19,7 @@ export default function generateGrid(words, width, height = width) {
     }
     let x = firstCoord.x;
     let y = firstCoord.y;
-    const coords = [firstCoord];
+    const coords = [];
     word.split('').forEach( (char, index) => {
       grid.set(x, y, char);
       coords.push({x, y});

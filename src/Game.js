@@ -19,7 +19,8 @@ export default class Game extends Component {
       selected: [],
       selecting: false,
       hinting: [],
-      hintNumber: 0
+      hintNumber: 0,
+      correctLetters: true
     };
   }
 
@@ -61,7 +62,8 @@ export default class Game extends Component {
   reset = () => {
     this.words.clearFound();
     this.setState({
-      selected: []
+      selected: [],
+      correctLetters: true
     });
   }
 
@@ -124,8 +126,14 @@ export default class Game extends Component {
   onSelectEnd = () => {
     if(this.state.selecting) {
       let word = this.state.selected.map(cell => cell.char).join('');
+      let correctLetters = this.state.correctLetters;
       if (this.words.isWord(word) && !this.words.isFound(word)) {
         this.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
+        let correctCoords = this.words.getCoords(word);
+        correctLetters = correctLetters && this.state.selected.reduce( (correct, cell, index) => {
+          let correctCoord = correctCoords[index];
+          return correct && cell.x === correctCoord.x && cell.y === correctCoord.y;
+        }, true);
       }
       const completed = this.hasWon();
       if(completed) {
@@ -135,7 +143,8 @@ export default class Game extends Component {
         selected: [],
         hinting: [],
         selecting: false,
-        completed: completed
+        completed: completed,
+        correctLetters: correctLetters
       });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
@@ -164,12 +173,16 @@ export default class Game extends Component {
       }
       return <div className="row" key={'row' + y}>{row}</div>;
     });
+    let resetClassName = 'clickable status';
+    if(!this.state.correctLetters) {
+      resetClassName += ' spinning';
+    }
     return <div className="gridContainer">
             <div>
                 <div className="header">
-                    <div className="clickable" onClick={this.restart}>New</div>
-                    <div className="clickable status" onClick={this.reset}>Reset</div>
-                    <div className="clickable status" onClick={this.showHint}>Hint</div>
+                    <div className="clickable" onClick={this.restart}>+</div>
+                    <div className={resetClassName} onClick={this.reset}>♺</div>
+                    <div className="clickable" onClick={this.showHint}>?</div>
                     <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>
