@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import PropTypes from 'prop-types';
-import WordSet from './model/WordSet';
+
 import WordList from './WordList';
 
 export default class Game extends Component {
 
   static propTypes = {
     onRestart: PropTypes.func,
-    size: PropTypes.number
+    words: PropTypes.object
   }
 
   constructor(props) {
     super(props);
-    this.words = new WordSet(this.props.size);
     this.state = {
       completed: false,
       selected: [],
@@ -60,7 +59,7 @@ export default class Game extends Component {
   }
 
   reset = () => {
-    this.words.clearFound();
+    this.props.words.clearFound();
     this.setState({
       selected: [],
       correctLetters: true
@@ -68,10 +67,10 @@ export default class Game extends Component {
   }
 
   showHint = () => {
-    this.words.words.some( word => {
-      if(!this.words.isFound(word)) {
+    this.props.words.words.some( word => {
+      if(!this.props.words.isFound(word)) {
         this.setState({
-          hinting: this.words.getCoords(word),
+          hinting: this.props.words.getCoords(word),
           hintNumber: this.state.hintNumber + 1
         });
         return true;
@@ -80,7 +79,7 @@ export default class Game extends Component {
   }
 
   hasWon() {
-    return this.words.foundAll();
+    return this.props.words.foundAll();
   }
 
   adjacentToLast(x, y, last) {
@@ -127,8 +126,8 @@ export default class Game extends Component {
     if(this.state.selecting) {
       let word = this.state.selected.map(cell => cell.char).join('');
       let correctLetters = this.state.correctLetters;
-      if (this.words.isWord(word) && !this.words.isFound(word)) {
-        this.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
+      if (this.props.words.isWord(word) && !this.props.words.isFound(word)) {
+        this.props.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
         let correctCoords = this.words.getCoords(word);
         correctLetters = correctLetters && this.state.selected.reduce( (correct, cell, index) => {
           let correctCoord = correctCoords[index];
@@ -151,26 +150,23 @@ export default class Game extends Component {
   }
 
   render() {
-    let widthArray = new Array(this.words.width).fill();
-    let heightArray = new Array(this.words.height).fill();
+    let widthArray = new Array(this.props.words.width).fill();
+    let heightArray = new Array(this.props.words.height).fill();
     let cells = heightArray.map((emptyY, y) => {
       let row = widthArray.map((emptyX, x) => {
         let key = this.getCellKey(x, y);
-        let char = this.words.getCharAt(x, y);
+        let char = this.props.words.getCharAt(x, y);
         return <Cell key={key} x={x} y={y} char={char}
           selected={this.isCellSelected(x, y)}
           selecting={this.state.selecting}
-          used={this.words.isUsed(x, y)}
+          used={this.props.words.isUsed(x, y)}
           hinting={this.state.hinting.filter(coord => coord.x === x && coord.y === y).length > 0}
           hintNumber={this.state.hintNumber}
           onSelectStart={this.onSelectStart}
           onSelectOver={this.onSelectOver}
           onSelectOut={this.onSelectOut}
           onSelectEnd={this.onSelectEnd}></Cell>;
-      }).filter(cell => cell !== undefined);
-      if(row.length === 0){
-        return;
-      }
+      });
       return <div className="row" key={'row' + y}>{row}</div>;
     });
     let resetClassName = 'clickable status';
@@ -180,7 +176,7 @@ export default class Game extends Component {
     return <div className="gridContainer">
             <div>
                 <div className="header">
-                    <div className="clickable" onClick={this.restart}>+</div>
+                    <div className="clickable restart" onClick={this.restart}>+</div>
                     <div className={resetClassName} onClick={this.reset}>♺</div>
                     <div className="clickable" onClick={this.showHint}>?</div>
                     <div className="timer">{this.state.time || ' '}</div>
@@ -190,7 +186,7 @@ export default class Game extends Component {
                 </div>
             </div>
             <div className="characters">{this.state.selected.map(cell => cell.char).join('')}</div>
-            <WordList wordSet={this.words} />
+            <WordList wordSet={this.props.words} />
         </div>;
   }
 }
