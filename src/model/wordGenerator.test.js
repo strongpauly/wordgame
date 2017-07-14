@@ -24,4 +24,11 @@ describe('wordGenerator', () => {
     expect(count).toEqual(characters);
   });
 
+  it('will generate words using "hard" list' , () => {
+    let characters = 36;
+    let words = wordGenerator(characters, 3, 8, true);
+    let count = words.reduce( (count, word) => count + word.length, 0);
+    expect(count).toEqual(characters);
+  });
+
 });
