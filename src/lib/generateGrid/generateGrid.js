@@ -55,7 +55,7 @@ export default function generateGrid(words, width, height = width) {
   const sortedWords = words.concat();
   sortedWords.sort( (a, b) => b.length - a.length );
 
-  let iterationCount = 0;
+  // let iterationCount = 0;
   while(!grid.isFull()) {
     //Randomly try all possibilities to fit the words in!
     const newGrid = grid.clone();
@@ -69,8 +69,8 @@ export default function generateGrid(words, width, height = width) {
     if(newGrid.isFull()) {
       grid = newGrid;
     }
-    iterationCount ++;
+    // iterationCount ++;
   }
-  console.log(`Took ${iterationCount} attempts to find a solution`, words);
+  // console.log(`Took ${iterationCount} attempts to find a solution`, words);
   return grid;
 }

@@ -58,6 +58,7 @@
     "coverage": "node scripts/test.js --env=jsdom --coverage"
   },
   "jest": {
+    "coveragePathIgnorePatterns": ["/node_modules/", "/src/index.js", "registerServiceWorker.js"],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],

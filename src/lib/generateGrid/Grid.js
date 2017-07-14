@@ -31,7 +31,7 @@ export default class Grid {
   }
 
   /**
-   * Returns an array of coordinates which are currently empty within the Island.
+   * Returns an array of coordinates which are currently empty within the Grid.
    */
   getEmptyCoords() {
     let coords = [];
@@ -45,6 +45,8 @@ export default class Grid {
     return coords;
   }
 
+  //TODO: This is a hack to enable easy calculation if correct coordinates have been used
+  //to find words.  Replace with search method.
   setWordCoords(word, coords) {
     this.wordCoords.set(word, coords);
   }

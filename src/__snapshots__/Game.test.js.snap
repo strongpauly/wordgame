@@ -1,0 +1,413 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Game> renders without crashing 1`] = `
+<div
+  className="gridContainer"
+>
+  <div>
+    <div
+      className="header"
+    >
+      <div
+        className="clickable restart"
+        onClick={[Function]}
+      >
+        +
+      </div>
+      <div
+        className="reset clickable status"
+        onClick={[Function]}
+      >
+        ♺
+      </div>
+      <div
+        className="clickable hint"
+        onClick={[Function]}
+      >
+        ?
+      </div>
+      <div
+        className="timer"
+      >
+         
+      </div>
+    </div>
+    <div
+      className="grid"
+    >
+      <div
+        className="row"
+      >
+        <Cell
+          char="H"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={0}
+          y={0}
+        />
+        <Cell
+          char="E"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={1}
+          y={0}
+        />
+        <Cell
+          char="L"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={2}
+          y={0}
+        />
+        <Cell
+          char="P"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={3}
+          y={0}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <Cell
+          char="N"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={0}
+          y={1}
+        />
+        <Cell
+          char="O"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={1}
+          y={1}
+        />
+        <Cell
+          char="T"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={2}
+          y={1}
+        />
+        <Cell
+          char="E"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={3}
+          y={1}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <Cell
+          char="F"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={0}
+          y={2}
+        />
+        <Cell
+          char="U"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={1}
+          y={2}
+        />
+        <Cell
+          char="L"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={2}
+          y={2}
+        />
+        <Cell
+          char="L"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={3}
+          y={2}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <Cell
+          char="D"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={0}
+          y={3}
+        />
+        <Cell
+          char="E"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={1}
+          y={3}
+        />
+        <Cell
+          char="N"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={2}
+          y={3}
+        />
+        <Cell
+          char="T"
+          hintNumber={0}
+          hinting={false}
+          onSelectEnd={[Function]}
+          onSelectOver={[Function]}
+          onSelectStart={[Function]}
+          selected={false}
+          selecting={false}
+          used={false}
+          x={3}
+          y={3}
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="characters"
+  />
+  <WordList
+    wordSet={
+      TestWordSet {
+        "found": Set {},
+        "grid": Grid {
+          "cells": Array [
+            Array [
+              "H",
+              "N",
+              "F",
+              "D",
+            ],
+            Array [
+              "E",
+              "O",
+              "U",
+              "E",
+            ],
+            Array [
+              "L",
+              "T",
+              "L",
+              "N",
+            ],
+            Array [
+              "P",
+              "E",
+              "L",
+              "T",
+            ],
+          ],
+          "height": 4,
+          "width": 4,
+          "wordCoords": Map {
+            "HELP" => Array [
+              Object {
+                "x": 0,
+                "y": 0,
+              },
+              Object {
+                "x": 1,
+                "y": 0,
+              },
+              Object {
+                "x": 2,
+                "y": 0,
+              },
+              Object {
+                "x": 3,
+                "y": 0,
+              },
+            ],
+            "NOTE" => Array [
+              Object {
+                "x": 0,
+                "y": 1,
+              },
+              Object {
+                "x": 1,
+                "y": 1,
+              },
+              Object {
+                "x": 2,
+                "y": 1,
+              },
+              Object {
+                "x": 3,
+                "y": 1,
+              },
+            ],
+            "FULL" => Array [
+              Object {
+                "x": 0,
+                "y": 2,
+              },
+              Object {
+                "x": 1,
+                "y": 2,
+              },
+              Object {
+                "x": 2,
+                "y": 2,
+              },
+              Object {
+                "x": 3,
+                "y": 2,
+              },
+            ],
+            "DENT" => Array [
+              Object {
+                "x": 0,
+                "y": 3,
+              },
+              Object {
+                "x": 1,
+                "y": 3,
+              },
+              Object {
+                "x": 2,
+                "y": 3,
+              },
+              Object {
+                "x": 3,
+                "y": 3,
+              },
+            ],
+          },
+        },
+        "gridArray": Array [
+          Array [
+            "H",
+            "N",
+            "F",
+            "D",
+          ],
+          Array [
+            "E",
+            "O",
+            "U",
+            "E",
+          ],
+          Array [
+            "L",
+            "T",
+            "L",
+            "N",
+          ],
+          Array [
+            "P",
+            "E",
+            "L",
+            "T",
+          ],
+        ],
+        "size": 6,
+        "usedCells": Set {},
+        "words": Array [
+          "HELP",
+          "NOTE",
+          "FULL",
+          "DENT",
+        ],
+      }
+    }
+  />
+</div>
+`;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Cell from './Cell';
 import PropTypes from 'prop-types';
-
 import WordList from './WordList';
 
 export default class Game extends Component {
@@ -128,7 +127,7 @@ export default class Game extends Component {
       let correctLetters = this.state.correctLetters;
       if (this.props.words.isWord(word) && !this.props.words.isFound(word)) {
         this.props.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
-        let correctCoords = this.words.getCoords(word);
+        let correctCoords = this.props.words.getCoords(word);
         correctLetters = correctLetters && this.state.selected.reduce( (correct, cell, index) => {
           let correctCoord = correctCoords[index];
           return correct && cell.x === correctCoord.x && cell.y === correctCoord.y;
@@ -169,7 +168,7 @@ export default class Game extends Component {
       });
       return <div className="row" key={'row' + y}>{row}</div>;
     });
-    let resetClassName = 'clickable status';
+    let resetClassName = 'reset clickable status';
     if(!this.state.correctLetters) {
       resetClassName += ' spinning';
     }
@@ -178,7 +177,7 @@ export default class Game extends Component {
                 <div className="header">
                     <div className="clickable restart" onClick={this.restart}>+</div>
                     <div className={resetClassName} onClick={this.reset}>♺</div>
-                    <div className="clickable" onClick={this.showHint}>?</div>
+                    <div className="clickable hint" onClick={this.showHint}>?</div>
                     <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>
