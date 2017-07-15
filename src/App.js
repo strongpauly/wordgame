@@ -4,7 +4,7 @@ import './App.css';
 
 import Game from './Game';
 import propTypes from 'prop-types';
-import WordSet from './model/WordSet';
+import WordSet from './words/WordSet';
 
 export default class App extends Component {
 

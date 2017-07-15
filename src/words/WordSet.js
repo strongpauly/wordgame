@@ -1,6 +1,6 @@
 
 import wordGenerator from './wordGenerator';
-import generateGrid from '../lib/generateGrid/generateGrid';
+import generateGrid from '../grid/generateGrid';
 
 export default class WordSet {
 

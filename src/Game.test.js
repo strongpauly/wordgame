@@ -3,8 +3,8 @@ import Game from './Game';
 import {shallow, mount} from 'enzyme';
 import sinon from 'sinon';
 
-import WordSet from './model/WordSet';
-import Grid from './lib/generateGrid/Grid';
+import WordSet from './words/WordSet';
+import Grid from './grid/Grid';
 
 /* eslint-env jest */
 
