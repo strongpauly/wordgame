@@ -21,7 +21,7 @@ exports[`<Game> renders without crashing 1`] = `
         ♺
       </div>
       <div
-        className="clickable hint"
+        className="clickable showHint"
         onClick={[Function]}
       >
         ?

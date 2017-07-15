@@ -89,8 +89,6 @@ export default class Grid {
     return results;
   }
 
-  //TODO: This is a hack to enable easy calculation if correct coordinates have been used
-  //to find words.  Replace with search method.
   setWordCoords(word, coords) {
     this.wordCoords.set(word, coords);
   }

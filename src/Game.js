@@ -18,17 +18,12 @@ export default class Game extends Component {
       selecting: false,
       hinting: [],
       hintNumber: 0,
-      correctLetters: true
+      canComplete: true
     };
   }
 
   getCellKey(x, y) {
     return x + ',' + y;
-  }
-
-  getCellCoord(key) {
-    let split = key.split(',');
-    return {x:parseInt(split[0], 10), y: parseInt(split[1], 10)};
   }
 
   startTimer() {
@@ -61,7 +56,7 @@ export default class Game extends Component {
     this.props.words.clearFound();
     this.setState({
       selected: [],
-      correctLetters: true
+      canComplete: true
     });
   }
 
@@ -74,6 +69,7 @@ export default class Game extends Component {
         });
         return true;
       }
+      return false;
     });
   }
 
@@ -124,14 +120,8 @@ export default class Game extends Component {
   onSelectEnd = () => {
     if(this.state.selecting) {
       let word = this.state.selected.map(cell => cell.char).join('');
-      let correctLetters = this.state.correctLetters;
       if (this.props.words.isWord(word) && !this.props.words.isFound(word)) {
         this.props.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
-        let correctCoords = this.props.words.getCoords(word);
-        correctLetters = correctLetters && this.state.selected.reduce( (correct, cell, index) => {
-          let correctCoord = correctCoords[index];
-          return correct && cell.x === correctCoord.x && cell.y === correctCoord.y;
-        }, true);
       }
       const completed = this.hasWon();
       if(completed) {
@@ -142,7 +132,7 @@ export default class Game extends Component {
         hinting: [],
         selecting: false,
         completed: completed,
-        correctLetters: correctLetters
+        canComplete: this.props.words.canComplete()
       });
       window.removeEventListener('mouseup', this.onSelectEnd);
     }
@@ -169,7 +159,7 @@ export default class Game extends Component {
       return <div className="row" key={'row' + y}>{row}</div>;
     });
     let resetClassName = 'reset clickable status';
-    if(!this.state.correctLetters) {
+    if(!this.state.canComplete) {
       resetClassName += ' spinning';
     }
     return <div className="gridContainer">
@@ -177,7 +167,7 @@ export default class Game extends Component {
                 <div className="header">
                     <div className="clickable restart" onClick={this.restart}>+</div>
                     <div className={resetClassName} onClick={this.reset}>♺</div>
-                    <div className="clickable hint" onClick={this.showHint}>?</div>
+                    <div className="clickable showHint" onClick={this.showHint}>?</div>
                     <div className="timer">{this.state.time || ' '}</div>
                 </div>
                 <div className={this.state.completed ? 'grid completed' : 'grid'}>
