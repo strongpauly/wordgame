@@ -56,4 +56,20 @@ export default class WordSet {
   get height() {
     return this.grid.height;
   }
+
+  /**
+   * @return Whether all words can still be found within the grid.
+   */
+  canComplete() {
+    //Out of all the words left to find.
+    return this.words.filter( word => !this.found.has(word) ).every( leftToFind => {
+      //Can we find a single path
+      return this.grid.findPath(leftToFind).some( path => {
+        //That has all of it's coordinates unused.
+        return path.every(coord => {
+          return !this.isUsed(coord.x, coord.y);
+        });
+      });
+    });
+  }
 }

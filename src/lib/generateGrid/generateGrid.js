@@ -1,5 +1,6 @@
 
 import Grid from './Grid';
+import findPossible from './findPossible';
 
 export default function generateGrid(words, width, height = width) {
   //Check that size can hold words
@@ -36,17 +37,8 @@ export default function generateGrid(words, width, height = width) {
     return coords;
   }
 
-  function isValidCoord(x, y) {
-    return x >= 0 && y >= 0 && x < width && y < height;
-  }
-
   function move(x, y, grid) {
-    let possible = [
-      {x: x, y: y - 1},
-      {x: x, y: y + 1},
-      {x: x - 1, y: y},
-      {x: x + 1, y: y}
-    ].filter( coord => isValidCoord(coord.x, coord.y));
+    let possible = findPossible(x, y, width, height);
     // console.log('possible within bounds', possible);
     possible = possible.filter( coord => grid.isCellEmpty(coord.x, coord.y));
     // console.log('possible empty within bounds', possible);

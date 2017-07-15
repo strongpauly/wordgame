@@ -15,9 +15,8 @@ describe('WordSet', () => {
     expect(set.foundAll()).toEqual(false);
     set.words.forEach( word => {
       set.setWordFound(word, set.getCoords(word));
+      expect(set.canComplete()).toEqual(true);
     });
     expect(set.foundAll()).toEqual(true);
-
   });
-
 });
