@@ -211,4 +211,30 @@ describe('<Game>', () => {
     expect(words.canComplete()).toEqual(true);
     expect(game.find('.reset.spinning')).toHaveLength(0);
   });
+
+  it('will start a timer when first interact with grid', () => {
+    const words = new TestWordSet();
+    const game = mount(<Game words={words}/>);
+    const timer = game.find('.header .timer');
+    expect(timer).toHaveLength(1);
+    expect(timer.text()).toEqual(' ');
+    game.find('Cell').first().simulate('mousedown');
+    expect(timer.text()).toEqual('1');
+    jest.runTimersToTime(1000);
+    expect(timer.text()).toEqual('2');
+  });
+
+  it('will stop timer when game unmounts', () => {
+    const words = new TestWordSet();
+    const game = mount(<Game words={words}/>);
+    const timer = game.find('.header .timer');
+    expect(timer).toHaveLength(1);
+    expect(timer.text()).toEqual(' ');
+    game.find('Cell').first().simulate('mousedown');
+    expect(timer.text()).toEqual('1');
+    game.unmount();
+    jest.runTimersToTime(1000);
+    expect(timer.text()).toEqual('1');
+
+  });
 });

@@ -79,7 +79,6 @@ describe('Grid', () => {
     } else {
       expect(d2.y).toEqual(0);
       expect(d1.y).toEqual(2);
-
     }
   });
 

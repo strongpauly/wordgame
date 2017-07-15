@@ -15,23 +15,22 @@ export default function generateGrid(words, width, height = width) {
     //Randomly pick first character position
     const emptyPositions = grid.getEmptyCoords();
     const firstCoord = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
+     /* istanbul ignore if */
     if(firstCoord === undefined) {
       return false;
     }
     let x = firstCoord.x;
     let y = firstCoord.y;
     const coords = [];
-    word.split('').forEach( (char, index) => {
+    word.split('').forEach( (char) => {
       grid.set(x, y, char);
       coords.push({x, y});
-      if(index < word.length) {
-        let coord = move(x, y, grid);
-        if (coord) {
-          x = coord.x;
-          y = coord.y;
-        } else { //We can't fit the word in.
-          return;
-        }
+      const coord = move(x, y, grid);
+      if (coord) {
+        x = coord.x;
+        y = coord.y;
+      } else { //We can't fit the word in.
+        return;
       }
     });
     return coords;
