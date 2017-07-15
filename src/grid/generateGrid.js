@@ -1,4 +1,3 @@
-
 import Grid from './Grid';
 import findPossible from './findPossible';
 

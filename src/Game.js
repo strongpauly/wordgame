@@ -38,9 +38,7 @@ export default class Game extends Component {
   }
 
   stopTimer() {
-    if(this.timerId) {
-      clearInterval(this.timerId);
-    }
+    clearInterval(this.timerId);
   }
 
   componentWillUnmount() {
@@ -78,8 +76,7 @@ export default class Game extends Component {
   }
 
   adjacentToLast(x, y, last) {
-    return last === undefined
-      || (x === last.x + 1 && y === last.y)
+    return (x === last.x + 1 && y === last.y)
       || (x === last.x - 1 && y === last.y)
       || (x === last.x && y === last.y - 1)
       || (x === last.x && y === last.y + 1);
@@ -89,7 +86,7 @@ export default class Game extends Component {
     this.startTimer();
     window.addEventListener('mouseup', this.onSelectEnd, false);
     this.setState({
-      selecting:true,
+      selecting: true,
       selected: [{x, y, char}]
     });
   }
@@ -118,24 +115,22 @@ export default class Game extends Component {
   }
 
   onSelectEnd = () => {
-    if(this.state.selecting) {
-      let word = this.state.selected.map(cell => cell.char).join('');
-      if (this.props.words.isWord(word) && !this.props.words.isFound(word)) {
-        this.props.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
-      }
-      const completed = this.hasWon();
-      if(completed) {
-        this.stopTimer();
-      }
-      this.setState({
-        selected: [],
-        hinting: [],
-        selecting: false,
-        completed: completed,
-        canComplete: this.props.words.canComplete()
-      });
-      window.removeEventListener('mouseup', this.onSelectEnd);
+    let word = this.state.selected.map(cell => cell.char).join('');
+    if (this.props.words.isWord(word) && !this.props.words.isFound(word)) {
+      this.props.words.setWordFound(word, this.state.selected.map(cell => this.getCellKey(cell.x, cell.y)));
     }
+    const completed = this.hasWon();
+    if(completed) {
+      this.stopTimer();
+    }
+    this.setState({
+      selected: [],
+      hinting: [],
+      selecting: false,
+      completed: completed,
+      canComplete: this.props.words.canComplete()
+    });
+    window.removeEventListener('mouseup', this.onSelectEnd);
   }
 
   render() {

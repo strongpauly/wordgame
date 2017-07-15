@@ -1,5 +1,5 @@
 import wordlist from 'wordlist-english';
-const englishWords = wordlist['english'].filter(word => word.indexOf('�') === -1);
+const englishWords = wordlist['english'].filter(word => word.indexOf('�') === -1); //Remove words with weird character.
 
 export default function randomword(length) {
   let word;

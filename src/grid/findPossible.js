@@ -1,4 +1,3 @@
-
 /**
  * @return an array of possible adjacent coordinates filtered by the size of the grid.
  */

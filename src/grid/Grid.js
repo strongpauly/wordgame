@@ -1,4 +1,3 @@
-
 import findPossible from './findPossible';
 
 export default class Grid {

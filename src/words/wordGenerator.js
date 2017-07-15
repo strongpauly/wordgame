@@ -1,4 +1,3 @@
-
 import hardRandomWord from 'random-word-of-length';
 import easyRandomWord from './easyWordGenerator';
 
@@ -13,6 +12,7 @@ export default function wordGenerator(characters, minWordLength = 3, maxWordLeng
   while (charactersLeft > maxWordLength) {
     let newWordLength = getWordLength(minWordLength, maxWordLength);
     let newCharactersLeft = charactersLeft - newWordLength;
+    /* istanbul ignore if */
     if (newCharactersLeft < minWordLength) {
       continue; //Loop again until we generate a length that won't leave a word too small.
     }

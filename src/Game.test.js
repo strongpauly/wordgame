@@ -47,6 +47,16 @@ class TestWordSet2 extends WordSet {
 
 }
 
+expect.extend({
+  toHaveSelected(game, string) {
+    const selected = game.state('selected').map(cell => cell.char).join('');
+    return {
+      message: () => `expected to have ${string} selected, but had ${selected}`,
+      pass: selected === string
+    };
+  }
+});
+
 describe('<Game>', () => {
   jest.useFakeTimers();
 
@@ -72,10 +82,8 @@ describe('<Game>', () => {
     const game = mount(<Game words={words}/>);
     const cells = game.find('Cell');
     expect(cells).toHaveLength(16);
-    cells.get(0).onSelectStart(); //H
-    const letters = game.state('selected');
-    expect(letters).toHaveLength(1);
-    expect(letters[0].char).toEqual('H');
+    cells.at(0).simulate('mousedown'); //H
+    expect(game).toHaveSelected('H');
   });
 
   it('selecting two cells stores their letters in selected', () => {
@@ -83,12 +91,18 @@ describe('<Game>', () => {
     const game = mount(<Game words={words}/>);
     const cells = game.find('Cell');
     expect(cells).toHaveLength(16);
-    cells.get(0).onSelectStart(); //H
-    cells.get(1).onSelectOver(); //E
-    const letters = game.state('selected');
-    expect(letters).toHaveLength(2);
-    expect(letters[0].char).toEqual('H');
-    expect(letters[1].char).toEqual('E');
+    cells.at(0).simulate('mousedown'); //H
+    cells.at(1).simulate('mouseover'); //E
+    expect(game).toHaveSelected('HE');
+  });
+
+  it('doesn\'t select a cell without mousedown first', () => {
+    const words = new TestWordSet();
+    const game = mount(<Game words={words}/>);
+    const cells = game.find('Cell');
+    expect(cells).toHaveLength(16);
+    cells.first().simulate('mouseover'); //H
+    expect(game).toHaveSelected('');
   });
 
   it('deselecting a cell removes it\s letter from selected', () => {
@@ -98,14 +112,9 @@ describe('<Game>', () => {
     expect(cells).toHaveLength(16);
     cells.get(0).onSelectStart(); //H
     cells.get(1).onSelectOver(); //E
-    let letters = game.state('selected');
-    expect(letters).toHaveLength(2);
-    expect(letters[0].char).toEqual('H');
-    expect(letters[1].char).toEqual('E');
+    expect(game).toHaveSelected('HE');
     cells.get(0).onSelectOver(); //Move back to H
-    letters = game.state('selected');
-    expect(letters).toHaveLength(1);
-    expect(letters[0].char).toEqual('H');
+    expect(game).toHaveSelected('H');
   });
 
   function findHelp(game) {
@@ -115,6 +124,7 @@ describe('<Game>', () => {
     cells.get(1).onSelectOver(); //E
     cells.get(2).onSelectOver(); //L
     cells.get(3).onSelectOver(); //P
+    expect(game).toHaveSelected('HELP');
     cells.get(3).onSelectEnd();
   }
 
@@ -123,6 +133,22 @@ describe('<Game>', () => {
     const game = mount(<Game words={words}/>);
     findHelp(game, words);
     expect(words.isFound('HELP')).toEqual(true);
+  });
+
+  it('selecting a cell diagonally doesn\'t word', () => {
+    const words = new TestWordSet();
+    const game = mount(<Game words={words}/>);
+    const cells = game.find('Cell');
+    expect(cells).toHaveLength(16);
+    cells.get(0).onSelectStart(); //H
+    expect(game).toHaveSelected('H');
+    cells.get(4).onSelectOver(); //N
+    expect(game).toHaveSelected('HN');
+    cells.get(0).onSelectOver();
+    expect(game).toHaveSelected('H');
+    cells.get(5).onSelectOver();
+    expect(game).toHaveSelected('H');
+    cells.get(5).onSelectEnd();
   });
 
   it('selecting all words marks the game complete', () => {
