@@ -110,8 +110,8 @@ describe('<Game>', () => {
     const game = mount(<Game words={words}/>);
     const cells = game.find('Cell');
     expect(cells).toHaveLength(16);
-    cells.get(0).onSelectStart(); //H
-    cells.get(1).onSelectOver(); //E
+    cells.at(0).simulate('mousedown'); //H
+    cells.at(1).simulate('mouseover'); //E
     expect(game).toHaveSelected('HE');
     cells.get(0).onSelectOver(); //Move back to H
     expect(game).toHaveSelected('H');
@@ -120,12 +120,12 @@ describe('<Game>', () => {
   function findHelp(game) {
     const cells = game.find('Cell');
     expect(cells).toHaveLength(16);
-    cells.get(0).onSelectStart(); //H
-    cells.get(1).onSelectOver(); //E
-    cells.get(2).onSelectOver(); //L
-    cells.get(3).onSelectOver(); //P
+    cells.at(0).simulate('mousedown'); //H
+    cells.at(1).simulate('mouseover'); //E
+    cells.at(2).simulate('mouseover'); //L
+    cells.at(3).simulate('mouseover'); //P
     expect(game).toHaveSelected('HELP');
-    cells.get(3).onSelectEnd();
+    cells.at(3).simulate('mouseup');
   }
 
   it('selecting a word marks that word as found', () => {
@@ -140,15 +140,15 @@ describe('<Game>', () => {
     const game = mount(<Game words={words}/>);
     const cells = game.find('Cell');
     expect(cells).toHaveLength(16);
-    cells.get(0).onSelectStart(); //H
+    cells.at(0).simulate('mousedown'); //H
     expect(game).toHaveSelected('H');
-    cells.get(4).onSelectOver(); //N
+    cells.at(4).simulate('mouseover'); //N
     expect(game).toHaveSelected('HN');
-    cells.get(0).onSelectOver();
+    cells.at(0).simulate('mouseover');
     expect(game).toHaveSelected('H');
-    cells.get(5).onSelectOver();
+    cells.at(5).simulate('mouseover');
     expect(game).toHaveSelected('H');
-    cells.get(5).onSelectEnd();
+    cells.at(5).simulate('mouseup');
   });
 
   it('selecting all words marks the game complete', () => {
@@ -160,25 +160,25 @@ describe('<Game>', () => {
     findHelp(game, words);
     expect(words.isFound('HELP')).toEqual(true);
     expect(gameInstance.hasWon()).toEqual(false);
-    cells.get(4).onSelectStart(); //N
-    cells.get(5).onSelectOver(); //O
-    cells.get(6).onSelectOver(); //T
-    cells.get(7).onSelectOver(); //E
-    cells.get(7).onSelectEnd();
+    cells.at(4).simulate('mousedown'); //N
+    cells.at(5).simulate('mouseover'); //O
+    cells.at(6).simulate('mouseover'); //T
+    cells.at(7).simulate('mouseover'); //E
+    cells.at(7).simulate('mouseup');
     expect(words.isFound('NOTE')).toEqual(true);
     expect(gameInstance.hasWon()).toEqual(false);
-    cells.get(8).onSelectStart(); //F
-    cells.get(9).onSelectOver(); //U
-    cells.get(10).onSelectOver(); //L
-    cells.get(11).onSelectOver(); //L
-    cells.get(11).onSelectEnd();
+    cells.at(8).simulate('mousedown'); //F
+    cells.at(9).simulate('mouseover'); //U
+    cells.at(10).simulate('mouseover'); //L
+    cells.at(11).simulate('mouseover'); //L
+    cells.at(11).simulate('mouseup');
     expect(words.isFound('FULL')).toEqual(true);
     expect(gameInstance.hasWon()).toEqual(false);
-    cells.get(12).onSelectStart(); //D
-    cells.get(13).onSelectOver(); //E
-    cells.get(14).onSelectOver(); //N
-    cells.get(15).onSelectOver(); //T
-    cells.get(15).onSelectEnd();
+    cells.at(12).simulate('mousedown'); //D
+    cells.at(13).simulate('mouseover'); //E
+    cells.at(14).simulate('mouseover'); //N
+    cells.at(15).simulate('mouseover'); //T
+    cells.at(15).simulate('mouseup');
     expect(words.isFound('DENT')).toEqual(true);
     expect(gameInstance.hasWon()).toEqual(true);
   });
@@ -224,10 +224,10 @@ describe('<Game>', () => {
     const cells = game.find('Cell');
     expect(game.find('.reset.spinning')).toHaveLength(0);
     expect(cells).toHaveLength(9);
-    cells.get(2).onSelectStart(); //D
-    cells.get(5).onSelectOver(); //A
-    cells.get(8).onSelectOver(); //N
-    cells.get(8).onSelectEnd();
+    cells.at(2).simulate('mousedown'); //D
+    cells.at(5).simulate('mouseover'); //A
+    cells.at(8).simulate('mouseover'); //N
+    cells.at(8).simulate('mouseup');
     expect(words.isFound('DAN')).toEqual(true);
     //Selecting DAN in this way prevents AND from being selectable, therefore the game cannot complete.
     expect(words.canComplete()).toEqual(false);
