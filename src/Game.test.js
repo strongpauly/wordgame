@@ -151,6 +151,24 @@ describe('<Game>', () => {
     cells.at(5).simulate('mouseup');
   });
 
+  it('won\'t cause an error if circle round to cell that is already selected', () => {
+    const words = new TestWordSet();
+    const game = mount(<Game words={words}/>);
+    const cells = game.find('Cell');
+    expect(cells).toHaveLength(16);
+    cells.at(1).simulate('mousedown'); //H
+    expect(game).toHaveSelected('E');
+    cells.at(2).simulate('mouseover'); //N
+    expect(game).toHaveSelected('EL');
+    cells.at(6).simulate('mouseover');
+    expect(game).toHaveSelected('ELT');
+    cells.at(5).simulate('mouseover');
+    expect(game).toHaveSelected('ELTO');
+    cells.at(1).simulate('mouseover');
+    expect(game).toHaveSelected('ELTO');
+    cells.at(1).simulate('mouseup');
+  });
+
   it('selecting all words marks the game complete', () => {
     const words = new TestWordSet();
     const game = mount(<Game words={words}/>);
