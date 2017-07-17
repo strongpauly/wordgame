@@ -55,9 +55,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "coverage": "node scripts/test.js --env=jsdom --coverage",
-    "predeploy": "npm run build",
-    "deploy": "scripts/deploy.sh"
+    "coverage": "node scripts/test.js --env=jsdom --coverage"
   },
   "jest": {
     "coveragePathIgnorePatterns": ["/node_modules/", "/src/index.js", "registerServiceWorker.js"],
