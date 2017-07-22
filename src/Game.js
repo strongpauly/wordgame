@@ -158,19 +158,19 @@ export default class Game extends Component {
       resetClassName += ' spinning';
     }
     return <div className="gridContainer">
-            <div>
-                <div className="header">
-                    <div className="clickable restart" onClick={this.restart}>+</div>
-                    <div className={resetClassName} onClick={this.reset}>♺</div>
-                    <div className="clickable showHint" onClick={this.showHint}>?</div>
-                    <div className="timer">{this.state.time || ' '}</div>
-                </div>
-                <div className={this.state.completed ? 'grid completed' : 'grid'}>
-                  {cells}
-                </div>
-            </div>
-            <div className="characters">{this.state.selected.map(cell => cell.char).join('')}</div>
-            <WordList wordSet={this.props.words} />
-        </div>;
+      <div>
+        <div className="header">
+          <div className="clickable restart" onClick={this.restart}>+</div>
+          <div className={resetClassName} onClick={this.reset}>♺</div>
+          <div className="clickable showHint" onClick={this.showHint}>?</div>
+          <div className="timer">{this.state.time || ' '}</div>
+        </div>
+        <div className={this.state.completed ? 'grid completed' : 'grid'}>
+          {cells}
+        </div>
+      </div>
+      <div className="characters">{this.state.selected.map(cell => cell.char).join('')}</div>
+      <WordList wordSet={this.props.words} />
+    </div>;
   }
 }

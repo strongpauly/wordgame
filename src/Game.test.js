@@ -105,7 +105,7 @@ describe('<Game>', () => {
     expect(game).toHaveSelected('');
   });
 
-  it('deselecting a cell removes it\s letter from selected', () => {
+  it('deselecting a cell removes it\'s letter from selected', () => {
     const words = new TestWordSet();
     const game = mount(<Game words={words}/>);
     const cells = game.find('Cell');

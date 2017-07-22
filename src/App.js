@@ -28,9 +28,9 @@ export default class App extends Component {
     return (
       <div className="App">
         <Game key={this.state.gameId}
-            gameId={this.state.gameId}
-            onRestart={this.restart}
-            words={this.state.words}></Game>
+          gameId={this.state.gameId}
+          onRestart={this.restart}
+          words={this.state.words}></Game>
       </div>
     );
   }
