@@ -57,7 +57,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "coverage": "node scripts/test.js --env=jsdom --coverage",
-    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "infrastructure": "terraform init ./infrastructure && terraform plan -out terraform.plan ./infrastructure && terraform apply terraform.plan"
   },
   "jest": {
     "coveragePathIgnorePatterns": [

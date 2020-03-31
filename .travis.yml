@@ -1,5 +1,21 @@
 language: node_js
 node_js:
-  - "6"
+- '10'
+install:
+- npm install
+before_script:
+- npm run coveralls
 script:
-  - 'npm run coveralls'
+- npm run build
+deploy:
+  provider: s3
+  bucket: wordgame.potsides.com
+  region: eu-west-2
+  skip_cleanup: true
+  local_dir: build
+  upload-dir: wordgame
+  acl: public_read
+  access_key_id:
+    secure: rQ5d7GHWTmhRrJYRo0DKiyg8jB+IbFmJb2gwzD8f/KA2yZrCpeg4SjR7Atyl0YCPch8PQmjMBVMHmqyQZcoJxTmq9zoRUgVzlwsatEvt7WPacurhnF9aRadgj/07+4lMSxZJDTW10wOYPD6vUlXAH3AuzuLhwyK5tDLgCu3ZCpzCfHSt0dJyYGJuOHIAahPeulWfwQC4OdcOJwbNmwag8zowXBAFcRiTO4Hmvfmvp3puM904BFBlqrNd9H//QTpDb/+5A2YddCws5sZd8hv8i02QCS8zRiBw3Yzyhsetejw3MD9dzO+cT37p2w9PYz9kMdBO4cp9trNzgXVC9Oo7JHFcyRIhM5yK2paP6bgbQh5S7wLkrdUQP7ZNO0FAXjwUWqUAmVN27AsHIQQDM5j+aFIJG3wLPW43ilTX8fwtnWa7BDqI63MNLa5b6BdFpC+lIvkA13cD0z63MSHJdCZSnqUlHUxujZpaiwYnzsbBPkPNE0r1denym8M8nilTJ8i4UplLNvHYVRt+w02fhcDuhCw0/6ET92oWuT5AILxfFfmBlkIUQZLlsLrAeXdZur2YRMwdOW182++x5/tB3GgqhtbNspu79btOR1R2DnEWOTFObR187aHMwnXAbd4k3Cdu7rT1q24o7wf0USu55bDYBThJUzYITQWqNE+SRRFW0mU=
+  secret_access_key:
+    secure: tLlf20wVhpKe6L0emdvt8PSFx34QF40FAPtEF3EV/CxbexF0HuZej0IhMkFgCviFTCQrA1igW999iW0zAi2rXL74WhsDjSB63vMNmJkJU4v/FIYzetvLFFDxLsr98cGJH3BeMgKtwTsGm7JQfjp3dreEB3+OEn2dtnhAAnwICxGDvOd2eZQbJAjvKQT+Sj4Z6IjtTfjG1csy1Bqtd940lBez78iyZhBeRzstD9G12u56YIA/vgqnfljsh7+bwsHOIV3ZYDIeVOt6L2ISFHMlq398uxsvWod5cPo/OTMDqxsI/TBTnqYYBQfN6m6AxiXNN7UfdkA7v0j0J+eLZVT4L+ecIc4JMsnvsNm5a3Mn1gbjFJGtk/50JBCtBHBsGL/Xbgjjpu+DuHuKm5S1Rr09j/1QzgaPuqgNNwlOITmR+yRiDglTkNtzZlhhR9L5aUNJWjAyvu3sy1JQl1ZDK7CPsLn+ZaMFsl9uzp2fHoiAU/onQrlqFN7a8DQirGMSwQaAD0RO3IWO6ccoMc3YqnqzCCEVRwbYqBtIJ8t8iVdBAJiCl2CHQvW3BAuTuOF1sKg45KuihChVWcjUzSxDJjgszfgj8q+k5UjS7eMvyGRWeTvjQ0+m9YZvU0Orh6eDTXH1sIimsWg2ClJRzuu81jhpN9tvpXncKCNo3iCFyO3lCH0=
